@@ -14,7 +14,7 @@ library(babynames)
 
 ```{r}
 babynames |> 
-  filter(str_detect(name, "c$")) |> 
+  filter(str_ends(name, "c")) |> 
   summarize(sum_n = sum(n),
             sum_prop = sum(prop),
             .by = c(sex, year)) |> 
