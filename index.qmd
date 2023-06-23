@@ -1,11 +1,32 @@
 ---
-title: "class-2023-06-22"
+title: "Baby Names"
+execute: 
+  echo: false
+  warning: false
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+THis is an exampl plot using data from the babyname package.
 
 ```{r}
-1 + 1
+library(tidyverse)
+library(babynames)
 ```
+
+```{r}
+babynames |> 
+  filter(str_detect(name, "c$")) |> 
+  summarize(sum_n = sum(n),
+            sum_prop = sum(prop),
+            .by = c(sex, year)) |> 
+  ggplot(aes(x = year, y = sum_prop, fill = sex)) +
+  geom_area() +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = 'Percentage of US Babies with Names Ending in "c"',
+       subtitle = "Girl names have slightly outpaced boy names since the 1970s.",
+       x = "Year",
+       y = "Percent",
+       caaption = "R Babynames dataset",
+       fill = "Sex")
+  
+```
+
